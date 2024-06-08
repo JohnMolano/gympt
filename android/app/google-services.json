@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "802441482110",
+    "project_id": "demoomolds-225117",
+    "storage_bucket": "demoomolds-225117.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802441482110:android:f55c28c3168359513ded2f",
+        "android_client_info": {
+          "package_name": "com.example.gympt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWDzVxE3ssGvw10nq9xVuqLBJcFcJGL7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
