@@ -3,9 +3,9 @@
     "short_name": "gympt",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
+    "background_color": "#FB5B21",
     "theme_color": "#000000",
-    "description": "A new Flutter project.",
+    "description": "AI-powered personal trainers use your age, gender, fitness level and goals to create personalized training plans that fit your individual needs.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
