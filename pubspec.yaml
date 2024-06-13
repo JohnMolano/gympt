@@ -76,6 +76,9 @@ dependencies:
   google_gemini: ^0.1.2
   gemini: ^2.1.1
   json_serializable: ^6.8.0
+  youtube_api_client: ^1.1.0
+  youtube_player_flutter: ^8.1.1
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:
@@ -136,3 +139,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+dependency_overrides:
+  http: ^0.13.3

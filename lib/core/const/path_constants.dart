@@ -55,5 +55,8 @@ class PathConstants {
 
 
   //IA
-   static const String IaExample1 = '${(kDebugMode && kIsWeb)?"":"assets/"}images/ia/example1.jpg';
+   static const String iaExample1 = '${(kDebugMode && kIsWeb)?"":"assets/"}images/ia/example1.jpg';
+   static const String iaExampleEctomorfa = '${(kDebugMode && kIsWeb)?"":"assets/"}images/ia/ectomorfa.webp';
+   static const String iaExampleMesomorfica = '${(kDebugMode && kIsWeb)?"":"assets/"}images/ia/mesomorfica.webp';
+   static const String iaExampleEndomorfo = '${(kDebugMode && kIsWeb)?"":"assets/"}images/ia/endomorfo.webp';
 }
