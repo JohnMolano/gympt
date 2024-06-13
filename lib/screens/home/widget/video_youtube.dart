@@ -1,13 +1,8 @@
-
-
-import 'dart:js_interop';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_api_client/youtube_api.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoYoutubeScreen extends StatefulWidget {
   const VideoYoutubeScreen({super.key});
@@ -17,7 +12,6 @@ class VideoYoutubeScreen extends StatefulWidget {
 }
 
 class _VideoYoutubeScreenState extends State<VideoYoutubeScreen> {
-  late YoutubePlayerController _controller;
   static const String _key = "AIzaSyA-DEAkR6vXctxcjl_t0fRXaelIRg0u4Po";
   // https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas?hl=es-419&project=demoomolds-225117&pageState=(%22allQuotasTable%22:(%22f%22:%22%255B%255D%22))
   // https://pub.dev/packages/youtube_api_client/example
@@ -31,6 +25,7 @@ class _VideoYoutubeScreenState extends State<VideoYoutubeScreen> {
       options: const SearchOptions(
         order: Order.relevance,
         videoDuration: VideoDuration.short,
+        maxResults: 2,
         type: [ResultType.video],
       ),
     );
@@ -46,14 +41,6 @@ class _VideoYoutubeScreenState extends State<VideoYoutubeScreen> {
   void initState() {
     super.initState();
     callAPI();
-
-    _controller = YoutubePlayerController(
-    initialVideoId: 'gU-bdqfhu7Y', // Reemplaza con el ID de tu video
-    flags: const YoutubePlayerFlags(
-      autoPlay: true,
-      mute: false,
-    ),
-  );
   }
 
   @override
@@ -109,13 +96,6 @@ class _VideoYoutubeScreenState extends State<VideoYoutubeScreen> {
                         decoration: TextDecoration.underline, // Opcional: Subrayado para indicar que es un enlace
                         color: Colors.blue, // Opcional: Color azul para simular un enlace
                       ),
-                    ),
-                  ),
-                  Center(
-                    child: YoutubePlayer(
-                      controller: _controller,
-                      showVideoProgressIndicator: true,
-                      progressIndicatorColor: Colors.blueAccent,
                     ),
                   ),
                   if (obj is YoutubeVideo)

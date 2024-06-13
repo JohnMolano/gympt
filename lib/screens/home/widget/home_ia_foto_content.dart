@@ -5,6 +5,7 @@ import 'package:gympt/core/const/text_constants.dart';
 //import 'package:gympt/screens/home/bloc/home_bloc.dart';
 import 'package:gympt/screens/home/widget/home_statistics.dart';
 import 'package:gympt/screens/home/widget/image_picker.dart';
+import 'package:gympt/screens/home/widget/video_iframe_youtube.dart';
 import 'package:gympt/screens/home/widget/video_youtube.dart';
 import 'package:gympt/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,8 @@ class HomeIAFotoContent extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
           const ImagePickerScreen(),
-          const VideoYoutubeScreen(),
+          //const VideoYoutubeScreen(),
+          const YoutubeVideoIframe(),
           const SizedBox(height: 35),
           const HomeStatistics(),
           const SizedBox(height: 25),

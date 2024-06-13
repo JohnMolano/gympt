@@ -78,7 +78,9 @@ dependencies:
   json_serializable: ^6.8.0
   youtube_api_client: ^1.1.0
   youtube_player_flutter: ^8.1.1
+  webview_flutter: ^4.0.0
   cached_network_image: ^3.2.1
+  youtube_player_iframe: ^5.1.2
 
 dev_dependencies:
   flutter_test:
