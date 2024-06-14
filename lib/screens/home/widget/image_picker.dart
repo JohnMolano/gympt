@@ -108,6 +108,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
           else
           const SizedBox(height: 25),
           if (imageFirebase != null && image != null)
+          //if (1 == 10)
             FutureBuilder(
               future:
                   generateContentProvider!.sacarRutinaDeImagen(prompt, image!),
@@ -115,8 +116,9 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                 final screenWidth = MediaQuery.of(context).size.width;
                 if (respuestaAsync.connectionState ==
                     ConnectionState.done) {
-
-                   //guardar en firebase
+                  
+           
+                  //guardar en firebase
                   if(respuestaAsync.data != null ) {
                     UserService.changeUserDataRoutine(imageUrl: imageFirebase.toString(),visionResult: respuestaAsync.data.toString());
                   }

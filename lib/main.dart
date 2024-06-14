@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:gympt/core/const/color_constants.dart';
 import 'package:gympt/core/service/notification_service.dart';
 import 'package:gympt/screens/onboarding/page/onboarding_page.dart';
@@ -13,7 +13,7 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  await initializeFirebase();
 
 
   runApp(const Gympt());
@@ -46,6 +46,10 @@ class _GymptState extends State<Gympt> {
   @override
   Widget build(BuildContext context) {
     final isLoggedIn = FirebaseAuth.instance.currentUser != null;
+    if (kDebugMode) {
+      print('isLoggedIn: $FirebaseAuth.instance.currentUser');
+    }
+    // ignore: prefer_const_constructors
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gympt',

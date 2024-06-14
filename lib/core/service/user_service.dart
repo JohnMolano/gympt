@@ -106,14 +106,27 @@ class UserService {
     }
     return null;
   }
+  
+  static Future<DocumentSnapshot<Map<String, dynamic>>?> getUserByUid() async {
+    try {
+      final userUid = firebase.currentUser?.uid;
+      final userDoc = await FirebaseFirestore.instance.collection('users').doc(userUid).get();
+      return userDoc;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error getUserByUid fetching user by UID: $e');
+      }
+      return null;
+    }
+  }
 
   static Future<bool> changeUserDataRoutine({required String imageUrl,required String visionResult}) async {
     try {
       //final ipAddress = await UserService.getWifiIP(); //mobile
       final ipAddress = await getPublicIP();
       final geo = await UserService.getLocationUser(ipAddress!);
-      final clientId = UserService.getUId();
-      await firestore.collection('users').doc(clientId).set({
+      final userUid = firebase.currentUser?.uid;
+      await firestore.collection('users').doc(userUid).set({
         'visionResult': visionResult,
         'imageUrl': imageUrl,
         'ipAddress': ipAddress,

@@ -1,21 +1,36 @@
 import 'package:gympt/core/const/color_constants.dart';
-import 'package:gympt/core/const/data_constants.dart';
-import 'package:gympt/core/const/path_constants.dart';
 import 'package:gympt/core/const/text_constants.dart';
+import 'package:gympt/core/service/user_service.dart';
 import 'package:gympt/screens/home/widget/home_statistics.dart';
 import 'package:gympt/screens/home/widget/image_picker.dart';
-import 'package:gympt/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:flutter/material.dart';
 
-import 'home_exercises_card.dart';
 
-class HomeIAFotoContent extends StatelessWidget {
-  const HomeIAFotoContent({
-    super.key,
-  });
+class HomeIAFotoContent extends StatefulWidget {
+  const HomeIAFotoContent({super.key});
+  @override
+  State<HomeIAFotoContent> createState() => _HomeIAFotoContentState();
+}
+
+class _HomeIAFotoContentState extends State<HomeIAFotoContent> {
+  bool createdRoutine = false;
+  Map? userData;
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    final userSnapshot = await UserService.getUserByUid();
+    if (userSnapshot != null && userSnapshot.exists) {
+      setState(() {
+        userData = userSnapshot.data();
+        createdRoutine = true;
+      });
+    }
+  }
   
-  get createdRoutine => false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
