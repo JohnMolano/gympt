@@ -2,14 +2,10 @@ import 'package:gympt/core/const/color_constants.dart';
 import 'package:gympt/core/const/data_constants.dart';
 import 'package:gympt/core/const/path_constants.dart';
 import 'package:gympt/core/const/text_constants.dart';
-//import 'package:gympt/screens/home/bloc/home_bloc.dart';
 import 'package:gympt/screens/home/widget/home_statistics.dart';
 import 'package:gympt/screens/home/widget/image_picker.dart';
-import 'package:gympt/screens/home/widget/video_iframe_youtube.dart';
-import 'package:gympt/screens/home/widget/video_youtube.dart';
 import 'package:gympt/screens/workout_details_screen/page/workout_details_page.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home_exercises_card.dart';
 
@@ -17,6 +13,8 @@ class HomeIAFotoContent extends StatelessWidget {
   const HomeIAFotoContent({
     super.key,
   });
+  
+  get createdRoutine => false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,60 +31,15 @@ class HomeIAFotoContent extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
-          const ImagePickerScreen(),
+          createdRoutine ? const HomeStatistics() 
+          : _createProgress(), const SizedBox(height: 25), const ImagePickerScreen(),
           //const VideoYoutubeScreen(),
-          const YoutubeVideoIframe(),
-          const SizedBox(height: 35),
-          const HomeStatistics(),
-          const SizedBox(height: 25),
-          _createProgress(),
+          //const YoutubeVideoIframe(),
+          //const SizedBox(height: 35),
+          //const HomeStatistics(),
+          
         ],
       ),
-    );
-  }
-
-  Widget _createExercisesList(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            TextConstants.discoverWorkouts,
-            style: TextStyle(
-              color: ColorConstants.textBlack,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        const SizedBox(height: 15),
-        SizedBox(
-          height: 160,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              const SizedBox(width: 20),
-              WorkoutCard(
-                  color: ColorConstants.cardioColor,
-                  workout: DataConstants.homeWorkouts[0],
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.workouts[0],
-                          )))),
-              const SizedBox(width: 15),
-              WorkoutCard(
-                  color: ColorConstants.armsColor,
-                  workout: DataConstants.homeWorkouts[1],
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.workouts[2],
-                          )))),
-              const SizedBox(width: 20),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
@@ -109,10 +62,11 @@ class HomeIAFotoContent extends StatelessWidget {
       ),
       child: const Row(
         children: [
-          Image(
-            image: AssetImage(
-              PathConstants.progress,
-            ),
+          Icon(
+            Icons.camera_alt,
+            color: ColorConstants.primaryColor,
+            size: 30.0,
+            semanticLabel: 'Text to announce in accessibility modes',
           ),
           SizedBox(width: 20),
           Flexible(
@@ -120,7 +74,7 @@ class HomeIAFotoContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  TextConstants.keepProgress,
+                  TextConstants.iaImgProgress,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -128,7 +82,7 @@ class HomeIAFotoContent extends StatelessWidget {
                 ),
                 SizedBox(height: 3),
                 Text(
-                  TextConstants.profileSuccessful,
+                  TextConstants.iaImgSuccessful,
                   style: TextStyle(
                     fontSize: 16,
                   ),

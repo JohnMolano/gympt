@@ -60,6 +60,9 @@ class TextConstants {
 
   static const String keepProgress = "Keep the progress!";
   static const String profileSuccessful = "You are more successful than 88% users.";
+    
+  static const String iaImgProgress = "You just have to upload one image!";
+  static const String iaImgSuccessful = "Take or upload a full body photo so we can give you an appropriate routine based on your body type.";
 
   // Home screen -> cardio card
   static const String cardioTitle = "Cardio";

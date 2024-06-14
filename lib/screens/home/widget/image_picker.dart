@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gympt/core/const/color_constants.dart';
 import 'package:gympt/core/service/generate_content_provider.dart';
+import 'package:gympt/core/service/user_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 // https://www.codewithhussain.com/flutter-image-picker
@@ -35,6 +36,10 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorConstants.primaryColor,
+                  foregroundColor: ColorConstants.white,
+                ),
                 onPressed: () async {
                   final ImagePicker picker = ImagePicker();
                   final img =
@@ -55,6 +60,10 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                 icon: const Icon(Icons.image),
               ),
               ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorConstants.primaryColor,
+                  foregroundColor: ColorConstants.white,
+                ),
                 onPressed: () async {
                   final ImagePicker picker0 = ImagePicker();
                   final img =
@@ -73,6 +82,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
               ),
             ],
           ),
+          const SizedBox(height: 25),
           if (image != null)
             Column(
                 children: [
@@ -81,24 +91,23 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                   else
                     Image.file(File(image!.path), width: 200, height: 200,),
                   
+                  const SizedBox(height: 25),
                   ElevatedButton.icon(
                     onPressed: () {
                       setState(() {
                         image = null;
+                        imageFirebase = null;
                       });
                     },
                     label: const Text('Remove Image'),
                     icon: const Icon(Icons.close),
-                  )
+                  ),
+                  const SizedBox(height: 25),
                 ],
             )
           else
-            const SizedBox(),
-          Text(
-            'Respuesta: ',
-            style: Theme.of(context).textTheme.headlineLarge,
-          ),
-          if (imageFirebase != null)
+          const SizedBox(height: 25),
+          if (imageFirebase != null && image != null)
             FutureBuilder(
               future:
                   generateContentProvider!.sacarRutinaDeImagen(prompt, image!),
@@ -106,6 +115,11 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                 final screenWidth = MediaQuery.of(context).size.width;
                 if (respuestaAsync.connectionState ==
                     ConnectionState.done) {
+
+                   //guardar en firebase
+                  if(respuestaAsync.data != null ) {
+                    UserService.changeUserDataRoutine(imageUrl: imageFirebase.toString(),visionResult: respuestaAsync.data.toString());
+                  }
 
                   // Validate the JSON string
                   bool isValid = isValidJson(respuestaAsync.data!);
@@ -134,13 +148,13 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                       ),
                     );
                   } else {
-                    // Convert the JSON string to an object
+                    // Convert the JSON string to an object 
+                    // Use the object as needed
                     Modelo modelo = Modelo.fromJson(respuestaAsync.data!);
                     if (kDebugMode) {
                       print('JSON:');
                       print(modelo);
                     }
-                    
                     return Container(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       width: screenWidth * 0.9,
@@ -445,116 +459,5 @@ bool isValidJson(String jsonString) {
     return true;
   } catch (e) {
     return false;
-  }
-}
-
-
-
-
-class Medidas {
-  final int pecho;
-  final int cintura;
-  final int caderas;
-
-  Medidas({required this.pecho, required this.cintura, required this.caderas});
-
-  factory Medidas.fromJson(Map<String, dynamic> json) {
-    return Medidas(
-      pecho: json['pecho'],
-      cintura: json['cintura'],
-      caderas: json['caderas'],
-    );
-  }
-}
-
-class Ejercicio {
-  final String nombre;
-  final int series;
-  final int repeticiones;
-
-  Ejercicio({required this.nombre, required this.series, required this.repeticiones});
-
-  factory Ejercicio.fromJson(Map<String, dynamic> json) {
-    return Ejercicio(
-      nombre: json['nombre'],
-      series: json['series'],
-      repeticiones: json['repeticiones'],
-    );
-  }
-}
-
-class Nutricion {
-  final String desayuno;
-  final String comida;
-  final String cena;
-
-  Nutricion({required this.desayuno, required this.comida, required this.cena});
-
-  factory Nutricion.fromJson(Map<String, dynamic> json) {
-    return Nutricion(
-      desayuno: json['desayuno'],
-      comida: json['comida'],
-      cena: json['cena'],
-    );
-  }
-}
-
-class Modelo {
-  final String objetivoMes;
-  final String tipoPersona;
-  final String edadMetablicaAproximada;
-  final int altura;
-  final int peso;
-  final double imc;
-  final Medidas medidas;
-  final String tipoCuerpo;
-  final String lugarEjecucion;
-  final String equipamientoElementosUsar;
-  final String calentamiento;
-  final List<Ejercicio> ejercicios;
-  final String enfriamiento;
-  final String consejos;
-  final Nutricion nutricion;
-
-  Modelo({
-    required this.objetivoMes,
-    required this.tipoPersona,
-    required this.edadMetablicaAproximada,
-    required this.altura,
-    required this.peso,
-    required this.imc,
-    required this.medidas,
-    required this.tipoCuerpo,
-    required this.lugarEjecucion,
-    required this.equipamientoElementosUsar,
-    required this.calentamiento,
-    required this.ejercicios,
-    required this.enfriamiento,
-    required this.consejos,
-    required this.nutricion,
-  });
-
-  factory Modelo.fromJson(String jsonString) {
-    final Map<String, dynamic> json = jsonDecode(jsonString);
-
-    return Modelo(
-      objetivoMes: json['objetivoMes'],
-      tipoPersona: json['tipoPersona'],
-      edadMetablicaAproximada: json['edadMetablicaAproximada'],
-      altura: json['altura'],
-      peso: json['peso'],
-      imc: json['imc'],
-      medidas: Medidas.fromJson(json['medidas']),
-      tipoCuerpo: json['tipoCuerpo'],
-      lugarEjecucion: json['lugarEjecucion'],
-      equipamientoElementosUsar: json['equipamientoElementosUsar'],
-      calentamiento: json['calentamiento'],
-      ejercicios: (json['ejercicios'] as List)
-          .map((item) => Ejercicio.fromJson(item))
-          .toList(),
-      enfriamiento: json['enfriamiento'],
-      consejos: json['consejos'],
-      nutricion: Nutricion.fromJson(json['nutricion']),
-    );
   }
 }

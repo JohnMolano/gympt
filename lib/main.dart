@@ -48,14 +48,13 @@ class _GymptState extends State<Gympt> {
     final isLoggedIn = FirebaseAuth.instance.currentUser != null;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Fitness',
+      title: 'Gympt',
       theme: ThemeData(
         textTheme: const TextTheme(bodyLarge: TextStyle(color: ColorConstants.textColor)),
         fontFamily: 'NotoSansKR',
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      //home: isLoggedIn ? const TabBarPage() : const OnboardingPage(),
       home: isLoggedIn ? const TabBarPage() : const OnboardingPage(),
     );
   }
