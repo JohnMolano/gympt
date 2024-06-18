@@ -1,10 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:gympt/core/const/color_constants.dart';
+import 'package:gympt/core/const/data_constants.dart';
 import 'package:gympt/core/const/text_constants.dart';
 import 'package:gympt/core/service/user_service.dart';
+import 'package:gympt/core/service/workouts_servide.dart';
+import 'package:gympt/data/workout_data.dart';
 import 'package:gympt/screens/home/widget/home_statistics.dart';
 import 'package:gympt/screens/home/widget/image_picker.dart';
 import 'package:flutter/material.dart';
-
+import 'package:gympt/screens/workout_details_screen/page/workout_details_page.dart';
+import 'home_exercises_card.dart';
 
 class HomeIAFotoContent extends StatefulWidget {
   const HomeIAFotoContent({super.key});
@@ -42,19 +47,93 @@ class _HomeIAFotoContentState extends State<HomeIAFotoContent> {
   }
 
   Widget _createHomeBody(BuildContext context) {
-    return SafeArea(
+    if(createdRoutine) {
+      return SafeArea(
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
-          createdRoutine ? const HomeStatistics() 
-          : _createProgress(), const SizedBox(height: 25), const ImagePickerScreen(),
+          const HomeStatistics(), 
+          const SizedBox(height: 30), 
+          _createExercisesList(context),
           //const VideoYoutubeScreen(),
           //const YoutubeVideoIframe(),
-          //const SizedBox(height: 35),
-          //const HomeStatistics(),
           
         ],
       ),
+    );
+    } else {
+      return SafeArea(
+      child: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        children: [
+          _createProgress(), 
+          const SizedBox(height: 25), 
+          const ImagePickerScreen(),
+        ],
+      ),
+    );
+    }
+    
+  }
+
+
+  Widget _createExercisesList(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            TextConstants.discoverWorkouts,
+            style: TextStyle(
+              color: ColorConstants.textBlack,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        const SizedBox(height: 15),
+        SizedBox(
+          height: 160,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              const SizedBox(width: 20),
+              WorkoutCard(
+                color: ColorConstants.cardioColor,
+                workout: DataConstants.homeWorkouts[0],
+                onTap: () async {
+                  // 1. Obteener los datos de Firebase
+                  List<WorkoutData> workouts = await WorkoutsService.fetchWorkouts(); 
+                  // 2. Verificar si hay datos
+                if (mounted && workouts.isNotEmpty) { 
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => WorkoutDetailsPage(
+                        workout: workouts[0], // Acceder al primer elemento
+                      ),
+                    ));
+                  } else {
+                    // Manejar el caso donde no hay datos (mostrar un mensaje, etc.)
+                    if (kDebugMode) {
+                      print('No hay entrenamientos disponibles');
+                    } 
+                  }
+                },
+              ),
+              const SizedBox(width: 15),
+              WorkoutCard(
+                  color: ColorConstants.armsColor,
+                  workout: DataConstants.homeWorkouts[1],
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => WorkoutDetailsPage(
+                            workout: DataConstants.workoutsDemo[2],
+                          )))),
+              const SizedBox(width: 20),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

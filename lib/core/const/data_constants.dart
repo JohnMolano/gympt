@@ -25,7 +25,7 @@ class DataConstants {
   ];
 
   // Workouts
-  static final List<WorkoutData> workouts = [
+  static final List<WorkoutData> workoutsDemo = [
     WorkoutData(
         title: TextConstants.yogaTitle,
         exercices: TextConstants.yogaExercises,

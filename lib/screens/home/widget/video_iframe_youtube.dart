@@ -6,27 +6,18 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gympt/data/exercise_data.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 
-const List<String> _videoIds = [
-  'tcodrIK2P_I',
-  'H5v3kku4y6Q',
-  'nPt8bK2gbaU',
-  'K18cpp_-gP8',
-  'iLnmTe5Q2Qw',
-  '_WoCV4c6XOE',
-  'KmzdUe0RSJo',
-  '6jZDSSZZxjQ',
-  'p2lYr3vM_1w',
-  '7QUtEmBT_-w',
-  '34_PXCzGw1M'
-];
+List<String> _videoIds = ['H5v3kku4y6Q',];
 
 
 ///
 class YoutubeVideoIframe extends StatefulWidget {
-  const YoutubeVideoIframe({super.key});
+  final ExerciseData exercise;
+  const YoutubeVideoIframe({super.key,
+  required this.exercise,});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -39,6 +30,7 @@ class _YoutubeVideoIframeState extends State<YoutubeVideoIframe> {
   @override
   void initState() {
     super.initState();
+    _videoIds.add(widget.exercise.video);
     _controller = YoutubePlayerController(
       params: const YoutubePlayerParams(
         showControls: true,
@@ -53,13 +45,19 @@ class _YoutubeVideoIframeState extends State<YoutubeVideoIframe> {
         log('${isFullScreen ? 'Entered' : 'Exited'} Fullscreen.');
       },
     );
-
+    
+    if (kDebugMode) {
+      print('widget.exercise.video');
+      print(_videoIds);
+    }
+    
     _controller.loadPlaylist(
       list: _videoIds,
       listType: ListType.playlist,
       startSeconds: 136,
     );
   }
+  //widget.exercise.video
 
   @override
   Widget build(BuildContext context) {

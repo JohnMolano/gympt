@@ -68,7 +68,7 @@ class TabBarPage extends StatelessWidget {
   Widget _createBody(BuildContext context, int index) {
     final children = [
       const HomeIAFotoPage(),
-      const HomePage(),
+      //const HomePage(),
       const WorkoutsPage(),
       const SettingsScreen()
       // Scaffold(

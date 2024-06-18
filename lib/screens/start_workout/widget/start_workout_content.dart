@@ -3,6 +3,7 @@ import 'package:gympt/core/const/path_constants.dart';
 import 'package:gympt/core/const/text_constants.dart';
 import 'package:gympt/data/exercise_data.dart';
 import 'package:gympt/screens/common_widgets/fitness_button.dart';
+import 'package:gympt/screens/home/widget/video_iframe_youtube.dart';
 import 'package:gympt/screens/start_workout/bloc/start_workout_bloc.dart';
 import 'package:gympt/screens/start_workout/page/start_workout_page.dart';
 import 'package:gympt/screens/start_workout/widget/start_workout_video.dart';
@@ -80,20 +81,21 @@ class StartWorkoutContent extends StatelessWidget {
   }
 
   Widget _createVideo(BuildContext context) {
-    final bloc = BlocProvider.of<StartWorkoutBloc>(context);
+    //final bloc = BlocProvider.of<StartWorkoutBloc>(context);
     return Container(
       height: 264,
       width: double.infinity,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
-      child: StartWorkoutVideo(
-        exercise: exercise,
-        onPlayTapped: (time) {
-          bloc.add(PlayTappedEvent(time: time));
-        },
-        onPauseTapped: (time) {
-          bloc.add(PauseTappedEvent(time: time));
-        },
-      ),
+      child: YoutubeVideoIframe(exercise: exercise,),
+      //child: StartWorkoutVideo(
+      //  exercise: exercise,
+      //  onPlayTapped: (time) {
+      //    bloc.add(PlayTappedEvent(time: time));
+      //  },
+      //  onPauseTapped: (time) {
+      //    bloc.add(PauseTappedEvent(time: time));
+      //  },
+      //),
     );
   }
 

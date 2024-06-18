@@ -31,7 +31,7 @@ class WorkoutContent extends StatelessWidget {
           const SizedBox(height: 5),
           Expanded(
             child: ListView(
-              children: DataConstants.workouts
+              children: DataConstants.workoutsDemo
                   .map(
                     (e) => _createWorkoutCard(e),
                   )

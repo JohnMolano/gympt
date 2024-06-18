@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:gympt/core/const/color_constants.dart';
 import 'package:gympt/core/const/path_constants.dart';
 import 'package:gympt/data/workout_data.dart';
@@ -53,10 +56,8 @@ class WorkoutDetailsBody extends StatelessWidget {
   Widget _createImage() {
     return SizedBox(
       width: double.infinity,
-      child: Image(
-        image: AssetImage(workout.image),
-        fit: BoxFit.cover,
-      ),
+      child: kIsWeb ? Image.network(workout.image, fit: BoxFit.cover,) : Image.file(File(workout.image),),
+      //child: Image(image: AssetImage(workout.image),fit: BoxFit.cover,),
     );
   }
 }

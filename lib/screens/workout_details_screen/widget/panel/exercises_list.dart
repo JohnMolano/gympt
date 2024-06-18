@@ -97,7 +97,7 @@ class ExerciseCell extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         image: DecorationImage(
-          image: AssetImage(workout.image),
+          image: NetworkImage(workout.image),
           fit: BoxFit.contain,
         ),
       ),
