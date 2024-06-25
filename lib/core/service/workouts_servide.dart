@@ -9,12 +9,22 @@ class WorkoutsService {
   static final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   static Future<List<WorkoutData>> fetchWorkouts() async {
-  final workoutsCollection = FirebaseFirestore.instance.collection('workouts');
-  final querySnapshot = await workoutsCollection.get();
-  List<WorkoutData> workouts = [];
-  for (var doc in querySnapshot.docs) {
-    workouts.add(WorkoutData.fromFirestore(doc));
+    final workoutsCollection = FirebaseFirestore.instance.collection('workouts');
+    final querySnapshot = await workoutsCollection.get();
+    List<WorkoutData> workouts = [];
+    for (var doc in querySnapshot.docs) {
+      workouts.add(WorkoutData.fromFirestore(doc));
+    }
+    return workouts;
   }
-  return workouts;
-}
+
+  static Future<List<WorkoutData>> fetchWorkoutsWhereTitle(title) async {
+    final workoutsCollection = FirebaseFirestore.instance.collection('workouts');
+    final querySnapshot = await workoutsCollection.where('title', isEqualTo: title).get();
+    List<WorkoutData> workouts = [];
+    for (var doc in querySnapshot.docs) {
+      workouts.add(WorkoutData.fromFirestore(doc));
+    }
+    return workouts;
+  }
 }

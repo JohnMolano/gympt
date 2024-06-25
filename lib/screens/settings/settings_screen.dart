@@ -94,11 +94,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Text('${TextConstants.rateUsOn}${Platform.isIOS ? 'App store' : 'Play market'}',
                     style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {
-                  return launchUrl((Platform.isIOS ? 'https://www.apple.com/app-store/' : 'https://play.google.com/store') as Uri);
+                  return launchUrl((Platform.isIOS ? Uri.parse('https://www.apple.com/app-store/') : Uri.parse('https://play.google.com/store')));
                 },
               ),
             SettingsContainer(
-                onTap: () => launchUrl('https://perpet.io/' as Uri), child: const Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                onTap: () => launchUrl(Uri.parse('https://techcraftjm.com/')), child: const Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
             SettingsContainer(
                 child: const Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {
@@ -115,15 +115,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                    onPressed: () => launchUrl('https://www.facebook.com/perpetio/' as Uri),
+                    onPressed: () => launchUrl(Uri.parse('https://www.facebook.com/profile.php?id=61557095804330')),
                     style: TextButton.styleFrom(shape: const CircleBorder(), backgroundColor: Colors.white, elevation: 1),
                     child: Image.asset(PathConstants.facebook)),
                 TextButton(
-                    onPressed: () => launchUrl('https://www.instagram.com/perpetio/' as Uri),
+                    onPressed: () => launchUrl(Uri.parse('https://www.linkedin.com/company/102855726/admin/dashboard/')),
                     style: TextButton.styleFrom(shape: const CircleBorder(), backgroundColor: Colors.white, elevation: 1),
                     child: Image.asset(PathConstants.instagram)),
                 TextButton(
-                    onPressed: () => launchUrl('https://twitter.com/perpetio' as Uri),
+                    onPressed: () => launchUrl(Uri.parse('https://www.youtube.com/@techcraftjm')),
                     style: TextButton.styleFrom(shape: const CircleBorder(), backgroundColor: Colors.white, elevation: 1),
                     child: Image.asset(PathConstants.twitter)),
               ],

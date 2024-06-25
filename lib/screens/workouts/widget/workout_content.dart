@@ -1,12 +1,25 @@
 import 'package:gympt/core/const/color_constants.dart';
 import 'package:gympt/core/const/data_constants.dart';
+import 'package:gympt/core/service/workouts_servide.dart';
 import 'package:gympt/data/workout_data.dart';
 import 'package:gympt/screens/workouts/widget/workout_card.dart';
 import 'package:flutter/material.dart';
 
-class WorkoutContent extends StatelessWidget {
+class WorkoutContent extends StatefulWidget {
   const WorkoutContent({super.key});
+  @override
+  _WorkoutContentState createState() => _WorkoutContentState();
+}
 
+class _WorkoutContentState extends State<WorkoutContent> {
+  late Future<List<WorkoutData>> _workoutsFuture;
+  
+  @override
+  void initState() {
+    super.initState();
+    _workoutsFuture = WorkoutsService.fetchWorkouts();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,14 +43,28 @@ class WorkoutContent extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Expanded(
-            child: ListView(
-              children: DataConstants.workoutsDemo
-                  .map(
-                    (e) => _createWorkoutCard(e),
-                  )
-                  .toList(),
+              child: FutureBuilder<List<WorkoutData>>(
+                future: _workoutsFuture
+        ,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No se encontraron entrenamientos.'));
+                  } else {
+                    return ListView(
+                      children: snapshot.data!
+                          .map(
+                            (workout) => _createWorkoutCard(workout), // Reemplaza con tu función para crear tarjetas
+                          )
+                          .toList(),
+                    );
+                  }
+                },
+              ),
             ),
-          ),
         ],
       ),
     );

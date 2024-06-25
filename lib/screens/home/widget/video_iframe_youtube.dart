@@ -10,7 +10,7 @@ import 'package:gympt/data/exercise_data.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 
-List<String> _videoIds = ['H5v3kku4y6Q',];
+List<String> _videoIds = ['g0z0rqoSmxY',];
 
 
 ///
@@ -51,11 +51,17 @@ class _YoutubeVideoIframeState extends State<YoutubeVideoIframe> {
       print(_videoIds);
     }
     
+    _controller.loadVideoById(
+      videoId: widget.exercise.video,
+    );
+    
+    /*
     _controller.loadPlaylist(
       list: _videoIds,
       listType: ListType.playlist,
       startSeconds: 136,
     );
+    */
   }
   //widget.exercise.video
 
@@ -67,10 +73,6 @@ class _YoutubeVideoIframeState extends State<YoutubeVideoIframe> {
           controller: _controller,
           builder: (context, player) {
             return Scaffold(
-              appBar: AppBar(
-                title: const Text('Youtube Player IFrame Demo'),
-                actions: const [VideoPlaylistIconButton()],
-              ),
               body: LayoutBuilder(
                 builder: (context, constraints) {
                   if (kIsWeb && constraints.maxWidth > 750) {

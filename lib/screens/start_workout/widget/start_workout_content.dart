@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gympt/core/const/color_constants.dart';
 import 'package:gympt/core/const/path_constants.dart';
 import 'package:gympt/core/const/text_constants.dart';
@@ -83,7 +85,7 @@ class StartWorkoutContent extends StatelessWidget {
   Widget _createVideo(BuildContext context) {
     //final bloc = BlocProvider.of<StartWorkoutBloc>(context);
     return Container(
-      height: 264,
+      height: 310,
       width: double.infinity,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: ColorConstants.white),
       child: YoutubeVideoIframe(exercise: exercise,),
@@ -139,7 +141,7 @@ class StartWorkoutContent extends StatelessWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      nextExercise?.title ?? "",
+                      nextExercise?.title.substring(0, min(nextExercise!.title.length, 30)) ?? "",
                       style: const TextStyle(
                         color: ColorConstants.textBlack,
                         fontSize: 17,

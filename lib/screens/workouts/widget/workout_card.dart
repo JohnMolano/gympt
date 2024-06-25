@@ -71,7 +71,7 @@ class WorkoutCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 60),
-                    Expanded(child: ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.asset(workout.image, fit: BoxFit.fill))),
+                    Expanded(child: ClipRRect(borderRadius: BorderRadius.circular(15), child: Image.network(workout.image, fit: BoxFit.fill))),
                   ],
                 ),
               ),

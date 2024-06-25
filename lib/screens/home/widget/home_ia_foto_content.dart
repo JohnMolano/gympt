@@ -8,6 +8,7 @@ import 'package:gympt/data/workout_data.dart';
 import 'package:gympt/screens/home/widget/home_statistics.dart';
 import 'package:gympt/screens/home/widget/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:gympt/screens/home/widget/video_youtube.dart';
 import 'package:gympt/screens/workout_details_screen/page/workout_details_page.dart';
 import 'home_exercises_card.dart';
 
@@ -104,7 +105,7 @@ class _HomeIAFotoContentState extends State<HomeIAFotoContent> {
                 workout: DataConstants.homeWorkouts[0],
                 onTap: () async {
                   // 1. Obteener los datos de Firebase
-                  List<WorkoutData> workouts = await WorkoutsService.fetchWorkouts(); 
+                  List<WorkoutData> workouts = await WorkoutsService.fetchWorkoutsWhereTitle("Cardio"); 
                   // 2. Verificar si hay datos
                 if (mounted && workouts.isNotEmpty) { 
                     // ignore: use_build_context_synchronously
@@ -125,10 +126,25 @@ class _HomeIAFotoContentState extends State<HomeIAFotoContent> {
               WorkoutCard(
                   color: ColorConstants.armsColor,
                   workout: DataConstants.homeWorkouts[1],
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => WorkoutDetailsPage(
-                            workout: DataConstants.workoutsDemo[2],
-                          )))),
+                  onTap: () async {
+                    // 1. Obteener los datos de Firebase
+                    List<WorkoutData> workouts2 = await WorkoutsService.fetchWorkoutsWhereTitle("Arms"); 
+                    // 2. Verificar si hay datos
+                  if (mounted && workouts2.isNotEmpty) { 
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => WorkoutDetailsPage(
+                          workout: workouts2[0], // Acceder al primer elemento
+                        ),
+                      ));
+                    } else {
+                      // Manejar el caso donde no hay datos (mostrar un mensaje, etc.)
+                      if (kDebugMode) {
+                        print('No hay entrenamientos disponibles');
+                      } 
+                    }
+                  },
+              ),
               const SizedBox(width: 20),
             ],
           ),
