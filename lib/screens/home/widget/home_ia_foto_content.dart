@@ -6,9 +6,9 @@ import 'package:gympt/core/service/user_service.dart';
 import 'package:gympt/core/service/workouts_servide.dart';
 import 'package:gympt/data/workout_data.dart';
 import 'package:gympt/screens/home/widget/home_statistics.dart';
+import 'package:gympt/screens/home/widget/home_user_info_card.dart';
 import 'package:gympt/screens/home/widget/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:gympt/screens/home/widget/video_youtube.dart';
 import 'package:gympt/screens/workout_details_screen/page/workout_details_page.dart';
 import 'home_exercises_card.dart';
 
@@ -19,11 +19,13 @@ class HomeIAFotoContent extends StatefulWidget {
 }
 
 class _HomeIAFotoContentState extends State<HomeIAFotoContent> {
+  late Future<UserData> _userDataFuture;
   bool createdRoutine = false;
   Map? userData;
   @override
   void initState() {
     super.initState();
+    _userDataFuture = UserService.getDataUser();
     _fetchUserData();
   }
 
@@ -56,6 +58,23 @@ class _HomeIAFotoContentState extends State<HomeIAFotoContent> {
           const HomeStatistics(), 
           const SizedBox(height: 30), 
           _createExercisesList(context),
+          Expanded(
+              child: FutureBuilder<UserData>(
+                future: _userDataFuture
+        ,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData) {
+                    return const Center(child: Text('No se encontraron datos de usuario.'));
+                  } else {
+                    return _createUserInfo(context, snapshot.data!);
+                  }
+                },
+              ),
+            ),
           //const VideoYoutubeScreen(),
           //const YoutubeVideoIframe(),
           
@@ -204,6 +223,35 @@ class _HomeIAFotoContentState extends State<HomeIAFotoContent> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _createUserInfo(BuildContext context, UserData userData) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 15),
+        SizedBox(
+          height: screenHeight * 3.4,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              WorkoutUserInfoCard(
+                color: ColorConstants.cardioColor,
+                userInfo: userData,
+                onTap: () async {
+                 if (kDebugMode) {
+                      print('dataUser ++++++++++++++++++++++++2');
+                      print(userData.modelo.objetivoMes);
+                    } 
+                },
+              ),
+              const SizedBox(width: 15),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -140,6 +140,16 @@ class UserService {
       throw Exception(e);
     }
   }
+
+  static Future<UserData> getDataUser() async {
+    final usersCollection = FirebaseFirestore.instance.collection('users');
+    final querySnapshot = await usersCollection.doc(firebase.currentUser?.uid).get();
+    late UserData dataUser;
+    if (querySnapshot.exists) {
+      dataUser =  UserData.fromFirestore(querySnapshot);
+    }
+    return dataUser;
+  }
 }
 
 
@@ -248,6 +258,30 @@ class Modelo {
       enfriamiento: json['enfriamiento'],
       consejos: json['consejos'],
       nutricion: Nutricion.fromJson(json['nutricion']),
+    );
+  }
+}
+
+class UserData {
+  final String imageUrl;
+  final String ipAddress;
+  final Modelo modelo;
+
+  UserData({
+    required this.imageUrl,
+    required this.ipAddress,
+    required this.modelo,
+  });
+
+  // Método para convertir un documento de Firestore a un objeto WorkoutData
+  factory UserData.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> doc) {
+    Map<String, dynamic> json = doc.data()!;
+
+    return UserData(
+      imageUrl: json['imageUrl'],
+      ipAddress: json['ipAddress'],
+      modelo: Modelo.fromJson(json['visionResult']),
     );
   }
 }

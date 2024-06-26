@@ -108,7 +108,6 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
           else
           const SizedBox(height: 25),
           if (imageFirebase != null && image != null)
-          //if (1 == 10)
             FutureBuilder(
               future:
                   generateContentProvider!.sacarRutinaDeImagen(prompt, image!),
