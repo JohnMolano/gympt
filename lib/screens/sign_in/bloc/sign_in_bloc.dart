@@ -24,7 +24,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       if (_checkValidatorsOfTextField()) {
         try {
           emit(LoadingState());
-          await AuthService.signIn(emailController.text, passwordController.text);
+          await AuthService.signIn(
+              emailController.text, passwordController.text);
           emit(NextTabBarPageState());
           if (kDebugMode) {
             print("Go to the next page");
@@ -36,7 +37,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           emit(ErrorState(message: e.toString()));
         }
       } else {
-         emit(ShowErrorState());
+        emit(ShowErrorState());
       }
     });
 
@@ -44,13 +45,20 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     on<SignUpTappedEvent>((event, emit) {
       emit(NextSignUpPageState());
     });
+
+    // Handle SignInTappedEvent
+    on<ForgotPasswordTappedEvent>((event, emit) {
+      emit(NextForgotPasswordPageState());
+    });
   }
 
   bool _checkIfSignInButtonEnabled() {
-    return emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    return emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty;
   }
 
   bool _checkValidatorsOfTextField() {
-    return ValidationService.email(emailController.text) && ValidationService.password(passwordController.text);
+    return ValidationService.email(emailController.text) &&
+        ValidationService.password(passwordController.text);
   }
 }
