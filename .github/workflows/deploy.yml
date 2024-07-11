@@ -37,14 +37,6 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
-      - name: Build
-        env:
-            VITE_GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-        run: |
-          export GOOGLE_API_KEY="AIzaSyDnyhtzfsWCbaL8J_ubDv7l5W8NuDUq9z0"
-          echo "GOOGLE_API_KEY=${VITE_GOOGLE_API_KEY}" > .env
-          cat .env
-          npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
