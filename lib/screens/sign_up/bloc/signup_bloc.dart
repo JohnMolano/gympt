@@ -8,36 +8,42 @@ part 'signup_event.dart';
 part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignupEvent, SignUpState> {
-  
   final userNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   bool isButtonEnabled = false;
+  bool aceptaTerminos = false;
 
   SignUpBloc() : super(SignupInitial()) {
     // Handle OnTextChangedEvent
     on<OnTextChangedEvent>((event, emit) {
       if (isButtonEnabled != checkIfSignUpButtonEnabled()) {
-        isButtonEnabled =
- checkIfSignUpButtonEnabled();
+        isButtonEnabled = checkIfSignUpButtonEnabled();
         emit(SignUpButtonEnableChangedState(isEnabled: isButtonEnabled));
       }
     });
+
+    // Handle TerminosCondicionesChangedEvent
+    on<TerminosCondicionesChangedEvent>((event, emit) {
+    // Cambia el valor antes de emitir el estado
+    aceptaTerminos = !aceptaTerminos; 
+    emit(SignUpTerminosChangedState(aceptaTerminos: aceptaTerminos));
+  });
+
     // Handle SignUpTappedEvent
     on<SignUpTappedEvent>((event, emit) async {
       if (checkValidatorsOfTextField()) {
         try {
           emit(LoadingState());
-          await AuthService.signUp(
-              emailController.text, passwordController.text, userNameController.text);
+          await AuthService.signUp(emailController.text,
+              passwordController.text, userNameController.text);
           emit(NextTabBarPageState());
           if (kDebugMode) {
             print("Go to the next page");
           }
-        } catch
- (e) {
+        } catch (e) {
           emit(ErrorState(message: e.toString()));
         }
       } else {
@@ -61,6 +67,7 @@ class SignUpBloc extends Bloc<SignupEvent, SignUpState> {
     return ValidationService.username(userNameController.text) &&
         ValidationService.email(emailController.text) &&
         ValidationService.password(passwordController.text) &&
-        ValidationService.confirmPassword(passwordController.text, confirmPasswordController.text);
+        ValidationService.confirmPassword(
+            passwordController.text, confirmPasswordController.text);
   }
 }

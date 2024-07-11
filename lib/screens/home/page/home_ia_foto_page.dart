@@ -17,31 +17,31 @@ class HomeIAFotoPage extends StatelessWidget {
 
   GenerateContentProvider _buildContext(BuildContext context) {
     return GenerateContentProvider(
-      model: configurarModelo(),
-      modelProvision: configurarModeloVision(),
-      child: BlocProvider<HomeBloc>(
-        create: (BuildContext context) => HomeBloc(),
-        child: BlocConsumer<HomeBloc, HomeState>(
-          buildWhen: (_, currState) => currState is HomeInitial,
-          builder: (context, state) {
-            return const HomeIAFotoContent();
-          },
-          listenWhen: (_, currState) => true,
-          listener: (context, state) {},
-        ),
-      )
-    );
+        model: configurarModelo(),
+        modelProvision: configurarModeloVision(),
+        child: BlocProvider<HomeBloc>(
+          create: (BuildContext context) => HomeBloc(),
+          child: BlocConsumer<HomeBloc, HomeState>(
+            buildWhen: (_, currState) => currState is HomeInitial,
+            builder: (context, state) {
+              return const HomeIAFotoContent();
+            },
+            listenWhen: (_, currState) => true,
+            listener: (context, state) {},
+          ),
+        ));
   }
 }
-
 
 GenerativeModel configurarModelo() {
   const apiKey = 'AIzaSyDnyhtzfsWCbaL8J_ubDv7l5W8NuDUq9z0';
   final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
   return model;
 }
+
 GenerativeModel configurarModeloVision() {
   const apiKey = 'AIzaSyDnyhtzfsWCbaL8J_ubDv7l5W8NuDUq9z0';
-  final model = GenerativeModel(model: 'gemini-pro-vision', apiKey: apiKey);
+  //final model = GenerativeModel(model: 'gemini-pro-vision', apiKey: apiKey);
+  final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: apiKey);
   return model;
 }

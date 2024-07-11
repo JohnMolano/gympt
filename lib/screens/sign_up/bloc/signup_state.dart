@@ -8,9 +8,13 @@ class SignupInitial extends SignUpState {}
 class SignUpButtonEnableChangedState extends SignUpState {
   final bool isEnabled;
 
-  SignUpButtonEnableChangedState({
-    required this.isEnabled,
-  });
+  SignUpButtonEnableChangedState({required this.isEnabled});
+}
+
+class SignUpTerminosChangedState extends SignUpState {
+  final bool aceptaTerminos;
+
+  SignUpTerminosChangedState({required this.aceptaTerminos});
 }
 
 class ShowErrorState extends SignUpState {}

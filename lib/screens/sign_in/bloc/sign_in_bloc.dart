@@ -39,6 +39,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
          emit(ShowErrorState());
       }
     });
+
+    // Handle SignInTappedEvent
+    on<SignUpTappedEvent>((event, emit) {
+      emit(NextSignUpPageState());
+    });
   }
 
   bool _checkIfSignInButtonEnabled() {

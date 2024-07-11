@@ -56,7 +56,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Stack(alignment: Alignment.topRight, children: [
               Center(
                 child: photoUrl == null
-                    ? const CircleAvatar(backgroundImage: AssetImage(PathConstants.profile), radius: 60)
+                    ? const CircleAvatar(
+                        backgroundImage: AssetImage(PathConstants.profile),
+                        radius: 60)
                     : CircleAvatar(
                         radius: 60,
                         child: ClipOval(
@@ -71,36 +73,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               TextButton(
                   onPressed: () async {
-                    await Navigator.push(context, MaterialPageRoute(builder: (context) => const EditAccountScreen()));
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const EditAccountScreen()));
                     setState(() {
                       photoUrl = user?.photoURL;
                     });
                   },
-                  style: TextButton.styleFrom(shape: const CircleBorder(), backgroundColor: ColorConstants.primaryColor.withOpacity(0.16)),
-                  child: const Icon(Icons.edit, color: ColorConstants.primaryColor)),
+                  style: TextButton.styleFrom(
+                      shape: const CircleBorder(),
+                      backgroundColor:
+                          ColorConstants.primaryColor.withOpacity(0.16)),
+                  child: const Icon(Icons.edit,
+                      color: ColorConstants.primaryColor)),
             ]),
             const SizedBox(height: 15),
-            Text(displayName, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(displayName,
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15),
             SettingsContainer(
               withArrow: true,
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const ReminderPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const ReminderPage()));
               },
-              child: const Text(TextConstants.reminder, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+              child: const Text(TextConstants.reminder,
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
             ),
             if (!kIsWeb)
               SettingsContainer(
-                child: Text('${TextConstants.rateUsOn}${Platform.isIOS ? 'App store' : 'Play market'}',
-                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                child: Text(
+                    '${TextConstants.rateUsOn}${Platform.isIOS ? 'App store' : 'Play market'}',
+                    style: const TextStyle(
+                        fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {
-                  return launchUrl((Platform.isIOS ? Uri.parse('https://www.apple.com/app-store/') : Uri.parse('https://play.google.com/store')));
+                  return launchUrl((Platform.isIOS
+                      ? Uri.parse('https://www.apple.com/app-store/')
+                      : Uri.parse('https://play.google.com/store')));
                 },
               ),
             SettingsContainer(
-                onTap: () => launchUrl(Uri.parse('https://techcraftjm.com/')), child: const Text(TextConstants.terms, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
+                onTap: () => launchUrl(Uri.parse(
+                    'https://techcraftjm.com/doc/PoliticaTratamientDatosTECHCRAFTJMS.A.S..pdf')),
+                child: const Text(TextConstants.terms,
+                    style:
+                        TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
             SettingsContainer(
-                child: const Text(TextConstants.signOut, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                child: const Text(TextConstants.signOut,
+                    style:
+                        TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
                 onTap: () {
                   AuthService.signOut();
                   Navigator.pushReplacement(
@@ -109,22 +132,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   );
                 }),
             const SizedBox(height: 15),
-            const Text(TextConstants.joinUs, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            const Text(TextConstants.joinUs,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                    onPressed: () => launchUrl(Uri.parse('https://www.facebook.com/profile.php?id=61557095804330')),
-                    style: TextButton.styleFrom(shape: const CircleBorder(), backgroundColor: Colors.white, elevation: 1),
+                    onPressed: () => launchUrl(Uri.parse(
+                        'https://www.facebook.com/profile.php?id=61557095804330')),
+                    style: TextButton.styleFrom(
+                        shape: const CircleBorder(),
+                        backgroundColor: Colors.white,
+                        elevation: 1),
                     child: Image.asset(PathConstants.facebook)),
                 TextButton(
-                    onPressed: () => launchUrl(Uri.parse('https://www.linkedin.com/company/102855726/admin/dashboard/')),
-                    style: TextButton.styleFrom(shape: const CircleBorder(), backgroundColor: Colors.white, elevation: 1),
+                    onPressed: () => launchUrl(Uri.parse(
+                        'https://www.linkedin.com/company/102855726/admin/dashboard/')),
+                    style: TextButton.styleFrom(
+                        shape: const CircleBorder(),
+                        backgroundColor: Colors.white,
+                        elevation: 1),
                     child: Image.asset(PathConstants.instagram)),
                 TextButton(
-                    onPressed: () => launchUrl(Uri.parse('https://www.youtube.com/@techcraftjm')),
-                    style: TextButton.styleFrom(shape: const CircleBorder(), backgroundColor: Colors.white, elevation: 1),
+                    onPressed: () => launchUrl(
+                        Uri.parse('https://www.youtube.com/@techcraftjm')),
+                    style: TextButton.styleFrom(
+                        shape: const CircleBorder(),
+                        backgroundColor: Colors.white,
+                        elevation: 1),
                     child: Image.asset(PathConstants.twitter)),
               ],
             )

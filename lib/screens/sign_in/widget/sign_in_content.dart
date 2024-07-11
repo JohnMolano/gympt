@@ -23,7 +23,10 @@ class SignInContent extends StatelessWidget {
         children: [
           _createMainData(context),
           BlocBuilder<SignInBloc, SignInState>(
-            buildWhen: (_, currState) => currState is LoadingState || currState is ErrorState || currState is NextTabBarPageState,
+            buildWhen: (_, currState) =>
+                currState is LoadingState ||
+                currState is ErrorState ||
+                currState is NextTabBarPageState,
             builder: (context, state) {
               if (state is LoadingState) {
                 return _createLoading();
@@ -97,7 +100,9 @@ class SignInContent extends StatelessWidget {
               placeholder: TextConstants.emailPlaceholder,
               controller: bloc.emailController,
               errorText: TextConstants.emailErrorText,
-              isError: state is ShowErrorState ? !ValidationService.email(bloc.emailController.text) : false,
+              isError: state is ShowErrorState
+                  ? !ValidationService.email(bloc.emailController.text)
+                  : false,
               onTextChanged: () {
                 bloc.add(OnTextChangeEvent());
               },
@@ -108,7 +113,9 @@ class SignInContent extends StatelessWidget {
               placeholder: TextConstants.passwordPlaceholderSignIn,
               controller: bloc.passwordController,
               errorText: TextConstants.passwordErrorText,
-              isError: state is ShowErrorState ? !ValidationService.password(bloc.passwordController.text) : false,
+              isError: state is ShowErrorState
+                  ? !ValidationService.password(bloc.passwordController.text)
+                  : false,
               obscureText: true,
               onTextChanged: () {
                 bloc.add(OnTextChangeEvent());
@@ -146,11 +153,14 @@ class SignInContent extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: BlocBuilder<SignInBloc, SignInState>(
-        buildWhen: (_, currState) => currState is SignInButtonEnableChangedState,
+        buildWhen: (_, currState) =>
+            currState is SignInButtonEnableChangedState,
         builder: (context, state) {
           return FitnessButton(
             title: TextConstants.signIn,
-            isEnabled: state is SignInButtonEnableChangedState ? state.isEnabled : false,
+            isEnabled: state is SignInButtonEnableChangedState
+                ? state.isEnabled
+                : false,
             onTap: () {
               FocusScope.of(context).unfocus();
               bloc.add(SignInTappedEvent());
