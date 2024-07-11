@@ -19,3 +19,10 @@ samples, guidance on mobile development, and a full API reference.
 ## Crear APK para Google Play Store
 - actualizar la version en D:\Proyectos\flutter\gympt\pubspec.yaml ejemplo: version: 1.0.2+2 debe quedar version: 1.0.3+3
 - flutter build appbundle
+
+## Subir cambios a pagina web
+
+Este esta configurado con Github Page y la configuracion esta en \gympt\.github\workflows\deploy.yml la url final es  https://gympt.techcraftjm.com/ hay que correr el comando y subir los cambios al repositorio para que realice el pipeline
+
+
+- flutter build web
