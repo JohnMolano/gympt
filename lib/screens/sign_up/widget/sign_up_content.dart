@@ -156,7 +156,7 @@ class SignUpContent extends StatelessWidget {
                 termsText:
                     'Acepto los términos y condiciones y políticas de tratamiento de datos',
                 url:
-                    'https://techcraftjm.com/doc/PoliticaTratamientDatosTECHCRAFTJMS.A.S..pdf',
+                    'https://techcraftjm.com/doc/PoliticaTratamientDatos.html',
                 onChanged: (value) {
                   if (kDebugMode) {
                     print(value!); // Imprime el valor del evento

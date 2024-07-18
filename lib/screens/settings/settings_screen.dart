@@ -116,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             SettingsContainer(
                 onTap: () => launchUrl(Uri.parse(
-                    'https://techcraftjm.com/doc/PoliticaTratamientDatosTECHCRAFTJMS.A.S..pdf')),
+                    'https://techcraftjm.com/doc/PoliticaTratamientDatos.html')),
                 child: const Text(TextConstants.terms,
                     style:
                         TextStyle(fontSize: 17, fontWeight: FontWeight.w500))),
